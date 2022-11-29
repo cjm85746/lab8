@@ -1,8 +1,9 @@
-# This file is where game logic lives. No input
+# sThis file is where game logic lives. No input
 # or output happens here. The logic in this file
 # should be unit-testable.
 
 from random import randint
+import pandas as pd
 
 
 class TicTacToe:
@@ -16,6 +17,20 @@ class TicTacToe:
             [None,None,None],
             [None,None,None]
         ]
+        self.re_board = pd.DataFrame(columns=[
+            "Game ID"
+            "Player 1"
+            "Player 2"
+            "Winner"
+         ])
+
+        self.st_board =pd.DataFrame(columns=[
+            "Wins"
+            "Loses"
+            "Draws"
+        ])
+
+
         self.player_type = {'O':True, 'X': True}
         self.player = 'O'
         self.winner=None
@@ -69,4 +84,37 @@ class TicTacToe:
         while self.board[a-1][b-1]!= None:
             a= int(input())
             b=int(input())
-        return a,
+        return a,b
+
+    def add_games (self,re_board, player):
+        if self.get_winner != None:
+            re_board.loc [len(re_board)]={
+                "Game ID": len(re_board) +1,
+                "Player 1": 'O',
+                "Player 2" : 'X',
+                "Winner": player
+            }
+            return re_board
+        elif self.count==9:
+            re_board.loc [len(re_board)]={
+                "Game ID": len(re_board) +1,
+                "Player 1": 'O',
+                "Player 2" : 'X"',
+                "Winner": "Draw"
+            }
+            return re_board
+        else:
+            return re_board
+
+    def statistics (self, player):
+        self.win = self.re_board ["Winner"==player]
+        self.loses = len(self.re_board)-len(self.win)
+        self.draws = self.re_board["Winner"=="Draw"]
+        self.st_board [0] ={
+            "Wins": len(self.win),
+            "Loses": self.loses,
+            "Draws": len (self.draws),
+        }
+        return self.st_board
+
+

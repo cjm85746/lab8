@@ -4,11 +4,14 @@
 
 from logic import TicTacToe
 from random import randint
+import pandas as pd
 
 """
 Return:
 until there is a winner or draw, the code keep shows and updates the tic-tac-toe so that two different players or one player with a bot can play the game
 """
+
+
 
 if __name__ == '__main__':
     ttt= TicTacToe()
@@ -60,11 +63,17 @@ if __name__ == '__main__':
         #Check if there is an winner
         if ttt.get_winner(ttt.board) != None:
             print ("The winner is", ttt.player)
+            ttt.add_games(ttt.re_board,ttt.player)
+            ttt.statistics(ttt.player)
+            print(ttt.re_board)
             break
 
         # if the board is full and no winner the game is draw.
         if ttt.count ==9:
             print ("Draw")
+            ttt.add_games (ttt.re_board,ttt.player)
+            ttt.statistics(ttt.player)
+            print(ttt.re_board)
             break
 
         #change the player
