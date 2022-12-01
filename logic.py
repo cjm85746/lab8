@@ -17,24 +17,31 @@ class TicTacToe:
             [None,None,None],
             [None,None,None]
         ]
+
         self.re_board = pd.DataFrame(columns=[
-            "Game ID"
-            "Player 1"
-            "Player 2"
+            "Game ID",
+            "Player 1",
+            "Player 2",
             "Winner"
-         ])
+            ])
 
         self.st_board =pd.DataFrame(columns=[
-            "Wins"
-            "Loses"
+            "Player",
+            "Wins",
+            "Loses",
             "Draws"
-        ])
+            ])
 
-
+ 
         self.player_type = {'O':True, 'X': True}
         self.player = 'O'
         self.winner=None
         self.count = 0
+        self.wins_O =0
+        self.loses_O =0
+        self.wins_O =0
+        self.loses_O =0
+        self.draws =0
 
     def single_player(self):
         self.player_type['X'] = False
@@ -88,7 +95,8 @@ class TicTacToe:
 
     def add_games (self,re_board, player):
         if self.get_winner != None:
-            re_board.loc [len(re_board)]={
+
+            re_board.loc[len(re_board)] = {
                 "Game ID": len(re_board) +1,
                 "Player 1": 'O',
                 "Player 2" : 'X',
@@ -99,22 +107,42 @@ class TicTacToe:
             re_board.loc [len(re_board)]={
                 "Game ID": len(re_board) +1,
                 "Player 1": 'O',
-                "Player 2" : 'X"',
-                "Winner": "Draw"
+                "Player 2" : 'X',
+                "Winner": "Draw",
             }
             return re_board
         else:
             return re_board
 
-    def statistics (self, player):
-        self.win = self.re_board ["Winner"==player]
-        self.loses = len(self.re_board)-len(self.win)
-        self.draws = self.re_board["Winner"=="Draw"]
-        self.st_board [0] ={
-            "Wins": len(self.win),
-            "Loses": self.loses,
-            "Draws": len (self.draws),
+    def statistics (self):
+        
+        self.wins_O = self.re_board[self.re_board ["Winner"]=="O"]
+        self.wins_X = self.re_board[self.re_board ["Winner"]=="X"]
+        self.draws = self.re_board[self.re_board["Winner"]=="Draw"]
+
+        self.loses_O = len(self.re_board)-len(self.wins_O)-len(self.draws)
+        self.loses_X = len(self.re_board)-len(self.wins_X)-len(self.draws)
+
+        self.st_board.loc [0] ={
+            "Player": "O",
+            "Wins": len(self.wins_O),
+            "Loses": self.loses_O,
+            "Draws": len(self.draws)
         }
+
+        self.st_board.loc [1] ={
+            "Player": "X",
+            "Wins": len(self.wins_X),
+            "Loses": self.loses_X,
+            "Draws": len(self.draws)
+        }
+
         return self.st_board
+
+
+
+
+            
+
 
 

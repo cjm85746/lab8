@@ -3,6 +3,7 @@
 import unittest
 import logic
 from random import randint
+import pandas as pd
 
 class TestLogic(unittest.TestCase):
 
@@ -29,6 +30,28 @@ class TestLogic(unittest.TestCase):
         a=1
         b=1
         self.assertEqual(self.ttt.constraint(a,b), (a,b))
+
+    def test_add_games(self):
+        re_board = pd.DataFrame(columns=[
+            "Game ID",
+            "Player 1",
+            "Player 2",
+            "Winner"
+        ])
+        player="O"
+        re_board_output = re_board.loc[0] = {
+                "Game ID": len(re_board) +1,
+                "Player 1": 'O',
+                "Player 2" : 'X',
+                "Winner": 'O'
+            }
+        temp = self.ttt.add_games(re_board,player)
+        tempwinner=temp["Winner"]
+        tempoutput = re_board_output["Winner"]
+        self.assertEqual(tempwinner,tempoutput)
+
+
+
     
 
 if __name__ == '__main__':
